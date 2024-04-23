@@ -1,0 +1,11 @@
+Step 1:
+Launch 2 Ubuntu Instances (Names: Ubuntu1, Ubuntu2)
+Make sure both instances have different security groups. (They can have same keypair. In this demo I'm using same pem file for both instances)
+
+Step2:
+Goto the Security Groups of Ubuntu1 ---> Edit Inbound Rules ---> Add rule ---> Type: SSH, Protocol: TCP, Port Range: 22, Source: Custom, Paste the Public IP Address of Ubuntu2 Instance (Ex: 65.1.94.26/32). Make sure to give /32 at the end after pasting the IP Address.
+
+Step3:
+Connect to the Ubuntu2 Instance using EC2 Instance Connect opition from AWS Console ---> vi <PEM File Name You Used to Launch Instance>.pem ---> Open pem file available in PC, you have created  ---> Copy the entire content from pem file  ---> Paste it in the ubuntu2 instance connceted place ---> Press 'esc' ---> :wq ---> chmod 400 <FullName of the PEM file>.pem ---> ssh -i <pem file name>.pem ubuntu@<IP of Ubuntu1> ---> Type 'yes' ---> 'You will see permanently added' ---> Type exit ---> You will see 'connection to <public ip of ubuntu1> closed ---> Now lets do the scp of a directory ---> Create a directory ---> mkdir <directoryname> ---> scp -r -i <pem file name>.pem <directory name> ubuntu@<ubuntu1 public ip>:/home/ubuntu 
+
+Connect to the Ubuntu1 using EC2 Instance Connect opition from AWS Console ---> ls ---> You can see the directory created in ubuntu2
