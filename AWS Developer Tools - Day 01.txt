@@ -1,0 +1,92 @@
+-----------------------------------------------------------------------------------------------------------------------------------------------------------										AWS Developer Tools - Day 01
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+DevOps: Git, GitHub, Jenkins, Maven, Tomcat, Docker, K8S, Ansible, Terraform....
+
+=> AWS provides a comprehensive set of CI & CD services that enables developers to automate and streamline the s/w delivery process.
+
+=> AWS Developer Tools: 
+	1. AWS Code Commit 		= GitHub
+	2. AWS Code Pipeline		= Jenkins
+	3. AWS Code Build		= Maven
+	4. AWS Code Deploy		= Ansible, Argo CD
+	5. Cloud Formation		= Terraform
+
+=> All the above tools are known as AWS Code Suite Services
+=> All the above tools are restricted to AWS Cloud only
+=> All the above tools are serverless services
+=> All the above tools are region specific services
+=> All the above tools are managed by AWS
+
+Why we need AWS for DevOps?
+1. Fully managed
+2. Built for scaling
+3. Programmable (Scripts)
+4. Automation 
+5. Security
+6. Pay as you use/go
+
+---------------------------------------
+AWS Code Commit
+---------------------------------------
+=> Region specific service
+=> Replacement to GitHub or GitLab
+=> Managed by AWS 
+
+Advantages:
+1. Managed by AWS that is similar to git
+2. Scalability
+3. Reliability
+
+Disadvantages:
+1. Less features compared to git and github
+2. AWS restricted
+3. Less integrations with servers available outside of AWS cloud
+
+Limitations:
+1. 50 GB/month of storage
+2. Only 10,000 pull/push requests per month
+3. 5 active users per month
+
+1. AWS Code Commit is used to store the code
+
+Demo:
+----------
+1. Create a repository
+2. Clone the repository to the local system
+3. Performing actions with vi code editor/GitBash
+
+Note: To work with AWS Code Commit, we have to create IAM User and attach codecommit policy
+
+Note: By default, the repositories that we create in Code Commit are private repositories.
+
+-------------------------------------
+AWS Code Pipeline
+-------------------------------------
+We can create the pipelines.
+Pipelines are created to do the automation of build and deployment activities.
+
+Pipeline: Step by step execution of an activity
+
+Code ----> Deployed
+
+
+
+git config --global user.name <UserName>
+git config --global user.email <UserEmail>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
