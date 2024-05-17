@@ -1,0 +1,70 @@
+AWS Code Commit
+AWS Code Pipeline
+
+AWS Code Build (Theory)
+AWS Code Deploy
+AWS Cloud Formation 
+
+Project: Code Commit (github) + Code Deploy + Code Pipeline
+
+-------------------------------
+AWS Code Build
+-------------------------------
+=> As an alternative to AWS Code Build, we have Jenkins
+=> Region specific
+=> Managed by AWS 
+=> Serverless
+=> Billing gets generated based on time taken for the builds to happen
+=> Scalable
+=> We can do multiple builds at a time
+=> "buildspec" file
+=> Format: json (or) yaml or yml
+=> Extension: buildspec.yml (or) buildspec.yaml (or) buildspec.json
+=> It can also be defined during the project creation
+
+---------------------------------------
+AWS Code Deploy
+---------------------------------------
+=> Managed by AWS
+=> It is used to automate the application deployment
+=> Region specific service
+=> Scalable
+=> Billing
+=> Serverless
+=> Supports EC2, Lambda, ECS, On-premise deployments
+=> We can integrate with Code Pipeline
+=> "appspec" file
+=> yml, yaml, json
+=> JSON = JavaScript Object Notation
+=> YAML = Yet Another Markup Language
+
+Inendations are most important in yml format
+Syntax is most important in json
+
+----------------------------------------------
+Cloud Formation
+----------------------------------------------
+=> Alternative to Terraform
+=> Limited to AWS
+=> Create the infratructure in the AWS Cloud
+=> IaaC - Infrastructure as a Code
+=> Cloud Formation Templates
+=> Extension: yaml (yml)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
