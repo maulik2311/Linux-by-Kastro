@@ -1,0 +1,88 @@
+To configure JAVA_HOME, MAVEN_HOME, and their respective paths on a Mac, follow these steps:
+--------------------------------------------------------------------------------------------------------------------------------------
+METHOD 1:
+********************
+Configuring JAVA_HOME and Java Path
+Open Terminal:
+Open the Terminal application from your Applications folder or by searching for it in Spotlight.
+
+Edit the Shell Profile:
+You need to add the environment variables to your shell profile. If you're using the default zsh shell (on macOS Catalina and later), you should edit the .zshrc file. For older macOS versions using bash, you should edit the .bash_profile.
+
+bash
+Copy code
+nano ~/.zshrc   # For zsh
+nano ~/.bash_profile   # For bash
+Add JAVA_HOME:
+Add the following lines to the file you opened. Adjust the path to where your JDK is installed. Assuming you installed Java 21 through a package manager like Homebrew, the path might look like this:
+
+sh
+Copy code
+export JAVA_HOME=$(/usr/libexec/java_home -v 21)
+export PATH=$JAVA_HOME/bin:$PATH
+If you installed Java manually, replace the path with the actual path to your JDK installation:
+
+sh
+Copy code
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home
+export PATH=$JAVA_HOME/bin:$PATH
+Apply the Changes:
+After adding the lines, save the file and exit the editor (Ctrl + O, Enter, then Ctrl + X for nano).
+
+Then, apply the changes:
+
+sh
+Copy code
+source ~/.zshrc   # For zsh
+source ~/.bash_profile   # For bash
+Verify the Configuration:
+Check if JAVA_HOME is set correctly:
+
+sh
+Copy code
+echo $JAVA_HOME
+java -version
+Configuring MAVEN_HOME and Maven Path
+Download and Extract Maven:
+Download the Maven binary zip file from Maven's official website and extract it.
+
+sh
+Copy code
+cd ~/Downloads
+tar -xvf apache-maven-3.9.6-bin.tar.gz
+sudo mv apache-maven-3.9.6 /opt/apache-maven-3.9.6
+Edit the Shell Profile:
+Open the shell profile file again:
+
+sh
+Copy code
+nano ~/.zshrc   # For zsh
+nano ~/.bash_profile   # For bash
+Add MAVEN_HOME:
+Add the following lines to the file:
+
+sh
+Copy code
+export MAVEN_HOME=/opt/apache-maven-3.9.6
+export PATH=$MAVEN_HOME/bin:$PATH
+Apply the Changes:
+After adding the lines, save the file and exit the editor (Ctrl + O, Enter, then Ctrl + X for nano).
+
+Then, apply the changes:
+
+sh
+Copy code
+source ~/.zshrc   # For zsh
+source ~/.bash_profile   # For bash
+Verify the Configuration:
+Check if MAVEN_HOME is set correctly:
+
+sh
+Copy code
+echo $MAVEN_HOME
+mvn -version
+By following these steps, you will have configured JAVA_HOME and MAVEN_HOME on your Mac, along with updating the PATH environment variable to include Java and Maven binaries.
+
+
+METHOD 2:
+********************
