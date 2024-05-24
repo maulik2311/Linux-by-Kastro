@@ -1,0 +1,45 @@
+The error message "Permission denied (publickey)" typically indicates that your SSH key is not correctly set up for the remote repository. Here's a step-by-step process to resolve this issue:
+
+Step 1: Check for Existing SSH Keys
+First, check if you already have an SSH key:
+ls -al ~/.ssh
+
+# If you see files like id_rsa and id_rsa.pub, you already have an SSH key. If not, you need to generate a new one.
+
+Step 2: Generate a New SSH Key (if needed)
+If you don't have an SSH key, generate one using the following command:
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+
+#Press Enter to accept the default file location and name. When prompted, enter a passphrase (you can leave it empty for no passphrase).
+
+Step 3: Add the SSH Key to the SSH Agent
+Start the SSH agent in the background:
+eval "$(ssh-agent -s)"
+
+#Add your SSH key to the agent:
+ssh-add ~/.ssh/id_rsa
+
+Step 4: Add Your SSH Key to Your GitHub Account
+Copy the SSH key to your clipboard:
+cat ~/.ssh/id_rsa.pub
+
+Go to your GitHub account:
+
+Go to Settings (from your profile dropdown).
+Select SSH and GPG keys.
+Click on New SSH key.
+Paste your SSH key into the "Key" field and give it a title.
+Step 5: Test the SSH Connection
+Test the SSH connection to GitHub:
+ssh -T git@github.com
+You should see a message like:
+Hi username! You've successfully authenticated, but GitHub does not provide shell access.
+
+Step 6: Set the Remote URL to Use SSH
+Ensure your Git remote URL is set to use SSH instead of HTTPS. Run the following command to change the remote URL:
+git remote set-url origin <SSH Remote Repository URL>
+
+Step 7: Push Your Changes
+Now try to push your changes:
+git push origin main
+
