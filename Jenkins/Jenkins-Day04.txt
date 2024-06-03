@@ -1,0 +1,225 @@
+___________________________________________________DAY 04__________________________________________________________
+_____________________________________________________________________________________________________________________
+
+1. Recovering Jenkins password
+
+3. RBAC
+4. Jenkins Parameters
+5. Master and Slave
+6. Variables
+
+------------------------------------
+Recovering Jenkins password
+------------------------------------
+cd /var/lib/jenkins ----> vi config.xml ----> Scroll to <UseSecurity> tag ----> Chnage 'true'  to 'flase' ----> restart the jenkins ----> sudo systemctl restart jenkins ----> Login to the jenkins
+
+Jenkins console ----> Manage jenkins ----> Security ----> Security Realm: You can see 'None', change 'none' to 'Jenkins own user database' ----> Apply ----> Save
+
+MobaXTerm ----> cd /var/lib/jenkins ----> vi config.xml ----> You can see 'true' for security tag.
+'True' is being seen because of the changes in security realm.
+
+Jenkins console ----> People ----> Select 'Username' of jenkins ----> Configure ----> Scroll down to see 'Password' ----> Type password ----> Apply ----> Save.
+
+Logout of the jenkins ----> Login again with new password.
+
+----------------------------
+PARAMETERS
+----------------------------
+Lets say, I have 4 war files, and each war I want to deploy into the respective environment. But, there is a chance that I might deploy the wrong war file to wrong environment. 
+So, here we will use a concept called PARAMETERS.
+
+Parameters are used to pass the inputs for the jobs.
+
+Types of parameters:
+1. Choice: 99% we will use this in real-time. Here we will select the appropriate one when we have multiple options.
+
+Lets work with parameters:
+1. Create a sample freestyle job.
+2. In General tab, you can see "This project is parameterized" Check this. --- Add parameter --- Select "Choice" --- Name: envi, 
+Choices: 
+dev
+qa
+uat
+prod --- Save --- Apply
+3. Click on Build now --- It will ask you about this job has to be built on which envi.
+4. Click on build number  ---  Parameters (Leftpane) --- You can see the parameter that you have selected while building.
+5. Now if you want to build on someother envi (Lets say QA) --- Goto Job --- Build with parameters (left pane) --- select qa --- Build --- Now the war file will build on qa envi. --- Click on build number --- parameters (left pane) --- You can see qa parameter.
+
+How to delete parameters?
+
+Goto the job --- General --- Click on the X mark under parameters --- Save --- Apply
+
+Note: You can build a job for multiple parameters.
+
+2. String: To pass multiple inputs at a time. In real-time we will not use this
+
+3. Multiline String: To pass multiple inputs in multiple lines.
+
+4. Boolean: True or False type. This is used when we want to take back-up of builds
+
+5. File: To build files. To take the files from local to server. This is also used to see the files in jenkins.
+
+------------------
+VARIABLES
+------------------
+Variables are classified into two types:
+1. User defined variables -- variables defined by user. These are static, till the time we change
+	1.1 Local variables -- we can define inside the job
+	1.2 Global variables -- we can define outside the job
+2. Jenkins environment variables
+These variables  are going to change as per the build
+
+How to pass variables in pipelines:
+Before that lets create a pipeline to get all the jenkins environment variables
+Lets create a pipeline ---> New item ---> Item name: pipeline-2 ---> Pipeline ---> OK ---> Pipeline (leftpane) ---> Definition: Pipeline script ---> Enter the below pipeline ---> (REFER SESSION 19-PIPELINE 2 FROM JENKINS FOLDER OF CLH)
+
+pipeline {
+    agent any
+
+    environment {
+        name = "Kastro" #These are local variables, I'm defining inside the job
+        location = "Hyderabad" #These are local variables, I'm defining inside the job
+    }
+    stages {
+        stage ('one') {
+            steps {
+                sh 'env' #to see all the jenkins environment variables which are provided by default
+            }
+        }
+    }
+}
+
+---> Save ---> Build now ---> You can see the pipeline execution ---> Keep the cursor on pipeline stage builds executed ---> Click on 'logs' ---> You will see all the jenkins environment variables which are provided by default
+
+To define variables outside of the job i.e Global Variables;
+Jenkins console ---> Manage jenkins ---> System ---> Global Properties ---> 'Check' Environment variables  ---> Add ---> Name: Location, Value: Pune
+
+
+-----------------------------------
+POST BUILD ACTIONS
+-----------------------------------
+Actions that we perform after the build are known as post build actions.
+Classified into three types: always, success, failure
+
+Open the pipeline you created ---> Manage ---> Configure ---> Paste the below script ---> 
+
+(REFER SESSION 19-PIPELINE 4 FROM JENKINS FOLDER OF CLH - 'always' example)
+
+********************
+ 'always' example
+********************
+
+pipeline {
+    agent any
+
+    environment {
+        name = "Kastro" #These are local variables, I'm defining inside the job
+        location = "Pune" #These are local variables, I'm defining inside the job
+    }
+    stages {
+        stage ('one') {
+            steps {
+                sh 'env'
+            }
+        }
+    }
+    post {
+        always {
+            echo "This build is done"
+        }
+    }
+}
+
+ ---> Save  ---> Build now ---> You can see 'post actions'
+
+Note: Post build actions will always run the post actions, even though the build gets failed. To observe this, in the above pipeline, in the place of 'sh' remove 'h' and then click on save and build now ---> Even though the first stage got failed, You can see the 'post actions' in green.
+
+********************
+ 'success' example
+********************
+pipeline {
+    agent any
+
+    environment {
+        name = "Kastro" #These are local variables, I'm defining inside the job
+        location = "Pune" #These are local variables, I'm defining inside the job
+    }
+    stages {
+        stage ('one') {
+            steps {
+                sh 'env'
+            }
+        }
+    }
+    post {
+        success {
+            echo "This build is done"
+        }
+    }
+}
+
+ ---> Save  ---> Build now ---> You can see 'post actions.'
+'success' means only when the build is success, the 'post actions' will be seen.
+'success' will execute post actions only when the build is successful.
+
+************
+'fail' example
+************
+
+pipeline {
+    agent any
+
+    environment {
+        name = "Kastro" #These are local variables, I'm defining inside the job
+        location = "Pune" #These are local variables, I'm defining inside the job
+    }
+    stages {
+        stage ('one') {
+            steps {
+                sh 'env'
+            }
+        }
+    }
+    post {
+        failure {
+            echo "This build is done"
+        }
+    }
+}
+
+ ---> Save  ---> Build now ---> You can see 'post actions.'
+'fail' will execute post actions only when the build is failed.
+
+To see the 'fail' as post actions, in the above script, remove 's' from 'sh' and then build the pipeline, you will see 'post actions' getting executed.
+
+Note: In real-time, we will always keep 'success' as post build actions
+
+-----------------------
+RBAC
+------------------------
+=> Roll Based Account Control
+
+=> By default, the user for jenkins is 'Admin User'
+=> To verify the users of jenkins ----> cd /var/lib/jenkins ----> cd users ---> ls ---> You will see a file "users.xml"----> You can see the users
+
+=> In order to restrict the permissions to all the team members working for the same project, we have to create jenkins users with limited/rerquired permissions.
+
+=> This can be made by creating users in the jenkins.
+
+=> Jenkins users have to be created, because the jenkins admin cannot share the id and password for security reasons.
+
+Creation of users in jenkins
+---------------------------------
+Jenkins console ---> Manage jenkins ---> Scroll down to see 'Users' under 'Security' option; and click on it ---> Click on 'Create User' ---> Username: kiran, Password: password, Provide the other details also ---> Click on 'Create User'
+
+Reference:
+Jenkins Admin: kastro ---> All permissions
+Jenkins User: kiran ---> All permissions will come by default
+
+How to set permissions for jenkins users?
+-----------------------------------------------------
+Jenkins console ----> Manage jenkins ----> Security ----> Security Realm: jenkins own user database ----> 'uncheck' allow users to signup ----> Autherization: Select 'Project based Matrix Autherization Strategy' (or) 'Matrix based Security' ----> Add user ----> username: enter the user you have created ----> ok ----> Give the permissions accordingly in the matrix
+
+Logout from admin account.
+
+Login using user credentials and see the changes.
