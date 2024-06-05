@@ -1,0 +1,86 @@
+#####################################################################################
+												Day 14
+#####################################################################################
+========================
+Launching EC2 Linux Instance
+========================
+Note: EC2 Service is specific to a region.
+
+750 Hours/Month will be the FREE TIER of EC2 Instances.
+
+EC2 Console ----> Launch Instances ----> 
+
+
+AZ: us-east-2b
+Storage: 12 GB (Free tier eligible instance types will get a minimum of 8GB and a maximum of 30 GB Storage capacity)
+
+Connecting to the Instance
+------------------------------------------
+In order to connect to the instance, we need to use external tools/software.
+.pem - MobaXTerm
+.ppk - Putty, Putty Gen
+
+Open MobaXTerm -----> Session -----> SSH -----> Remote Host: Paste the public IPv4 address of the instance  -----> Advanced SSH Settings -----> "Check" Use Private Key -----> Click on File icon -----> Select the Keypair file which was created while launching the instance -----> OK -----> You will see login as -----> By default the login name for Linux based instances is "ec2-user" -----> type ec2-user -----> You will see EC2 Logo which represents that you have successfully connected to the Instance.
+
+Inserting the data in the Instance
+-----------------------------------------------
+Pre-requisite: Install Apache web server
+
+Two types of Users will be there for an instance;
+1. ec2-user
+2. root user
+whoami -----> To see from which user you have connected to the instance
+sudo -i  -----> To switch to root user
+yum install httpd -y ----> CompleteTo install Apache webserver
+service httpd start ----> Command to start the Apache Webserve
+
+Accessing the EC2 Instance:
+-----------------------------------------------
+Copy the Public IPv4 Address of the Instance and Paste in new tab in a browser ----> You will see "This site cant be reached"
+
+By default, any website will run on Port No. 80
+
+How to open Port No. 80:
+------------------------------------------
+"Check" the instance -----> Security -----> Click on the link under Security Groups -----> Edit Inbound Rules -----> Add Rules -----> Type: Custom TCP, Protocol: TCP, Port Range: 80, Source: Anywhere -----> Save Rules.
+
+How to Insert the custom data inside an Instance and How to access the Custom data
+------------------------------------------------------------------------------------------------------------------------
+cd /var/www/html ----> To go to the HTML Pages
+vim index.html ----> To create an html page with custom name (index)
+Press "i" ----> To insert the data inside an Instance
+After inserting the data, press "escape"
+After pressing "escape" key, type :wq
+
+Reload the page in the browser. You will see the custom data
+
+How to Stop the Instance
+----------------------------------------------
+"Check" the Instance ----> Instance State ----> Select "Stop" ----> The instance will be stopped.
+If you want to restart the stopped instance, 
+"Check" the Instance ----> Instance State ----> Select "Start" ----> The instance will be started.
+
+How to Terminate the Instance
+------------------------------------------------------
+"Check" the Instance ----> Instance State ----> Select "Terminate" ----> The instance will be deleted permanently from the EC2 Console.
+
+=========================================================
+Enable & Disable Termination Protection for an EC2 Instance
+=========================================================
+If you dont want anybody to Terminate your instance, you can enable Termination protection to your instance.
+Termination protection can be done in two ways:
+1. While creating the Instance, we can enable the Termination protection
+
+During the Launch of Instance, click on "Advanced Details," you will see Termination Protection and from the dropdown select "Enable"
+"Check" the Instance ----> Instance State ----> Select "Terminate" ----> You will see "Failed to terminate an instance"
+
+
+2. After creating the Instance, we can enable the Termination protection
+
+How to disable the "termination protection" after creating the instance
+"Check" the Instance ----> Actions ----> Instance Settings ----> Change "Termination Protection" ----> Uncheck the tick box ----> Save
+Try to terminate the instance, and you can see the instance getting Shutdown/Terminated
+
+
+
+

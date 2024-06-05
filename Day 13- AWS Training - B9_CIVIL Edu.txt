@@ -1,0 +1,39 @@
+Concept of Virtualization
+---------------------------------------
+
+~ For any application, we need to AWS 3 Tier Architecture
+
+~ 3 Tier Architecture of AWS - Web Server, App Server, and DB Server
+
+~ To host these servers, we need Separate Hardware, CPU, Network, Storage....
+
+~ Assume that all the servers have the same capacity (4 Core, 16 GB)
+
+~ Virtualization is a concept of providing a single server to multiple parts (Web, App, DB Server) by allocating individual storage space.
+
+~ In order to allocate the resources for all the three server individually in a single server, a concept called Hypervisor is available.
+
+~ 4 C 16 GB
+
+	1C - 2GB - Web
+	1C - 2GB - App
+	1C - 2GB - DB
+
+	We still have 1C and 10 GB
+
+~ To split the components and to allocate the resources individually to all the servers, we will use a software called as "Hypervisor"
+
+~ XEN (till 2019), NITRO (from 2020)
+
+~ Types of Virtualization:
+1. HVM (Hardware Virtulization Machine / Fully Virtualized Machine) - 2019
+2. PVM (Para Virtualized Machine) - 2018
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,122 @@
+#####################################################################################
+												Day 12
+#####################################################################################
+========================
+S3 Multi-Part Upload
+========================
+~ To upload objects in AWS Cloud, we will use a service which is called as S3.
+
+~ If the file size is > 100 MB, AWS will not upload the file directly into the S3 Bucket. So, AWS will divide the file into CHUNKS.
+
+~ 100 GB - 10 Chunks - 5 Chunks are successfully uploaded - While installing the 6th chunk, you have lost the internet connectivity - Once after the internet connection is regained, AWS will start to upload the file from the 1st Chunk
+
+30 Mins, 50 GB of Data - Internet Data, Time consumption.
+
+30 Mins + 30 Mins, 100 GB
+
+~ If the file size is > 100 MB, AWS will suggest to upload such files using AWS S3 Multi-Part Upload.
+
+~ In S3 Multi-Part Upload, only after the 1st part gets uplaoded then only the 2nd part will get uploaded. After 2nd part is successfully uploaded, then only the 3rd will get uploaded............
+
+~ We can also do Parallel upload, inorder to save the file uploading time.
+
+~ If we want to upload a file using S3 Multi-Part Upload, we can do it only by using CLI, SDK, API.
+S3 Multi-Part Upload cannot be done by using the AWS Console.
+
+~ 3 Stages of multi-part upload:
+	1. Initiate multi-part upload - we will get the object ID - Temporary Storage
+	2. Upload all parts
+	3. Complete multi-part upload - All the parts/chunks will successfully get uploaded. The object can now 			be seen in S3 Bucket.
+
+========================
+S3 Cross Account Access
+========================
+Acount 1 (Root Account): 047965079876
+Acount 2 (Another Account): 423312637150
+
+
+Policy Name: s3caapolicy
+Role Name: s3caarole
+
+ARN of role: arn:aws:iam::047965079876:role/s3caarole
+Link to switch roles: https://signin.aws.amazon.com/switchrole?roleName=s3caarole&account=047965079876
+
+Account B:
+User Name: user111
+Signin URL: https://423312637150.signin.aws.amazon.com/console
+
+Polciy Name: s3readonlyaccountpolicy
+
+
+
+
+
+
+
+========================
+S3 Access Points
+========================
+~ Each Access Point will get its own DNS (Domain Name System).
+
+~ For each Access Point we will create an Access Point Policy
+
+Tasks:
+-----------
+1. Create an S3 Bucket - Create 3 Folders (datasets) - Bucket Policy allows access through access points from the account.
+2. Create an Access Point - Each team will access the data using their own Access Point Policy
+3. IAM - 3 Users
+
+Create S3 Bucket and Create 3 Sub Folders inside the bucket.
+
+IAM ----> Users ----> 
+
+IAM Users Names:
+-------------------------------
+datauser1 - Console Signin URL - https://047965079876.signin.aws.amazon.com/console
+datauser2 - Console Signin URL - https://047965079876.signin.aws.amazon.com/console
+datauser3 - Console Signin URL - https://047965079876.signin.aws.amazon.com/console
+
+Policies for each IAM user
+-------------------------------------------
+datauser1 - datauser1policy
+datauser2 - datauser1policy
+datauser3 - datauser1policy
+
+Bucket Policy:
+----------------------
+https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points-policies.html#access-points-delegating-control
+Take the Example 6 as reference from above link
+
+Access Point Policy:
+---------------------------------
+https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points-policies.html#access-points-delegating-control
+Take the Example 1 as reference from above link
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+_____________________________________________________________________________________
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,108 @@
+#####################################################################################
+												Day 15
+#####################################################################################
+========================
+Amazon Machine Image (AMI)
+========================
+~ An AMI is a template that is used to create a new instance—or virtual machine—based on user requirements. 
+~ The AMI will contain information about the software, operating system, volume, and access permissions. 
+~ You can launch 20 Instances per region using one AMI.
+
+~ Types of AMIs:
+-------------------------------------------
+i) AMI created by Root User
+ii) Community AMI - When an AMI is created by Root User and shared with other AWS users, it is called as Community AMI
+	Private AMI - People whom the root user is giving access 
+	Public AMI - It will be available in public domain
+iii) Market Place - Its a service offered by AWS
+
+============================
+Create AMI from EC2 Instance
+============================
+Tasks:
+----------
+1. Launch an EC2 Instance and Connect to it.
+2. Insert some data/install softwares inside the Instance.
+3. Create the AMI from the EC2 Instance
+
+Whenever you want to install softwares into the instance, you have to be a "Root User." 
+2. Lets install "nginx" s/w
+
+sudo su -
+sudo amazon-linux-extras install nginx1 ----> Command to install nginx s/w
+systemctl status nginx.service ----> To check the status of nginx s/w
+sudo service nginx start ----> To start the nginx s/w
+systemctl status nginx.service ----> To check the status of nginx s/w
+
+3. "Check" the instance ----> Actions ----> Images and Templates ----> Create Image ----> Name: B9 AMI - 30 March ----> Create Image
+
+How to access the AMIs
+--------------------------------------
+EC2 Console ----> AMIs (Left Pane) ----> You will see the created AMIs
+
+
+============================
+Launch EC2 Instance from AMI
+============================
+AMI console ----> "Check" the AMI you have created ----> Launch instance from AMI ----> Name: Instance from AMI ----> If you want to change the configuration you can change (optional) ----> Launch Instance.
+
+Connect to the instance and execute below commands:
+
+systemctl status nginx.service ----> To check the status of nginx s/w
+sudo service nginx start ----> To start the nginx s/w
+systemctl status nginx.service ----> To check the status of nginx s/w
+
+If you see "Active:Running" it indicates the newly created instance using AMI is also having the "nginx" software.
+
+=================================
+Automating Start and Stop of EC2 Instance
+=================================
+Pre-requisites:
+----------------------
+1. IAM Role with SSM Permission
+2. Launch EC2 Instance
+3. CloudWatch
+
+1. IAM Console -----> Roles -----> Create Role -----> Select "AWS Service" -----> Use Case: Select "EC2" -----> Next -----> In the search box type, ec2roleforssm and select the role -----> Next -----> Name:SSMRoleB9 -----> Create Role.
+
+2. EC2 Conosle -----> Launch the instace -----> Advanced Details -----> IAM Instance Profile and from the dropdown, select the IAM Role you have created in Step 1 (SSMRoleB9)
+
+After creating the instance, you can follow the below steps to attach a role:
+"Check" the Instance -----> Actions -----> Security -----> Modify IAM Role -----> Select the role from Dropdown -----> Update IAM Role
+
+3. CloudWatch
+Rule to start the instance automatically:
+CloudWatch -----> Events (Leftpane) -----> Rules -----> Click on "Back to cloudwatch events rule page" -----> Create Rule -----> "Check" Schedule -----> Fixed rate of ____ Minutes/Hours/Days -----> Add target -----> Select "SSM Automation" -----> Document: Select "startec2"  -----> Instance ID:      -----> Automation : ARN of Role created in IAM -----> Configure details -----> Name:     -----> Create rule.
+
+Rule to start the instance automatically:
+CloudWatch -----> Events (Leftpane) -----> Rules -----> Click on "Back to cloudwatch events rule page" -----> Create Rule -----> "Check" Schedule -----> Fixed rate of ____ Minutes/Hours/Days -----> Add target -----> Select "SSM Automation" -----> Document: Select "stopec2"  -----> Instance ID:      -----> Automation : ARN of Role created in IAM -----> Configure details -----> Name:     -----> Create rule.
+
+=========================================
+How to attach Elastic IP to running EC2 Instance
+=========================================
+
+While instance is running: 34.238.234.183
+Stop the instance and you will not see the Public IPv4 address
+Restart the instance
+After restarting the instance: 44.211.217.93
+
+Whenever you stop and restart the same instance, the public IP of that instance will get changed.
+In order to have the same IP address for an instance, we have to attach Elastic IP for that instance.
+Elastic IP is charged.
+
+Elastic IP: 52.45.151.234
+		    52.45.151.234
+
+================================================
+Migrate EC2 Instance from One Account to Another Account
+================================================
+Tasks:
+---------
+1. Create an Instance
+2. Create an Image (AMI)
+3. Enable Transfer Option
+
+
+
+
+

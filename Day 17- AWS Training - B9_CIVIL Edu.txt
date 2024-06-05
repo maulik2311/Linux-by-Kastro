@@ -1,0 +1,52 @@
+#####################################################################################
+												Day 16
+#####################################################################################
+==================
+EC2 Hibernate
+==================
+~ Whenever we Hibernate an EC2 Instance, whatever the data that is available in EBS Volume (RAM) the memory state is going to be preserved.
+~ An Instance cannot be hibernated morethan 60 days.
+~ Hibernation is available only for on-demand instances, reserved instances and spot instances.
+~ To hibernate the instance, the instance RAM Size must be less than 150 GB
+~ The root volume must be encrypted.
+
+Tasks:
+---------
+1. Create an EC2 Instance - Root volume must be encrypted - Stop-Hibernate Behaviour: Enable - Select the default KMS Key
+2. How to prove whether Hibernation is working or not
+	Connect to the instance -----> uptime -----> You will see the instance running time 
+3. Hibernate the instance and observe the changes
+	"check" the instance -----> Instance state -----> Hibernate Instance -----> Hibernate -----> The will get 	stopped. Wait for 2-3 minutes and restart the same instance -----> uptime -----> You will see the instance 	running time which got changed.
+	
+=================================
+How to change/resize the Instance type
+=================================
+~ In order to change the Instance type, the Instance has to be stopped.
+
+~ Stop the Instance
+
+~ "Check" the Instance ----> Actions ----> Instance Settings ----> Change Instance Type ----> You have to select the required instance type ----> Apply
+
+~ Restart the instance and you can the instance type has got changed.
+
+====================================
+Hosting a Wordpress Blog on EC2 Instance
+====================================
+1. Create an Instance
+2.
+
+==================================================
+Connecting to EC2 Instance using "EC2 Instance Connect" Option
+==================================================
+"Check" the Instance -----> Connect ----> EC2 Instance Connect -----> Connect ----> A new tab opens ----> You will EC2 Logo after some time
+
+
+
+
+
+
+
+
+
+
+

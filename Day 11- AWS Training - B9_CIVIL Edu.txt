@@ -1,0 +1,129 @@
+#####################################################################################
+												Day 11
+#####################################################################################
+========================
+S3 Life Cycle Management
+========================
+Problem-1
+---------------
+~ Client is having some apps. These apps are generating some 100s of files on daily basis. Now the client needs to store all these files in cloud environment.
+
+Ans: AWS - S3
+
+Problem-2
+---------------
+~ For the first 3 months, the files are going to be used by the customers - STANDARD
+
+~ After 3 months, these files may or maynot be accessed by the customers - STANDARD
+
+~ For the next 6 months, these files are not used frequently, but whenever customer needs the files, they should be accessible  - STANDARD
+
+~ For the next 24 months, these files should be available, but they maynot need an immediate access  - STANDARD
+
+~ After the 24 months, these files can be deleted  - STANDARD
+
+Total duration of files: 3M + 3M + 6M + 24M = 3 Years
+
+The question is it recommended to store all these 100s of files to store in the same storage class for 3 years?
+YES...Pay-as-you-use
+
+1 File of Size 100 MB. This file is going to cost 10 Rs./Month when you store in STANDARD Storage class
+
+1st 3 Months : 3 x 10 = 30 Rs.
+2nd 3 Months: 3 x 10 = 30 Rs.
+3rd 6 Months: 6 x 10 = 60 Rs.
+4nd 24 Months: 24 x 10 = 240 Rs.
+
+Total Cost for 3 years for each file = 360 Rs
+As a solutions architect, you have to optimize the cost by changing the storage classes.
+
+~ In order to change the storage classes, we will use a concept called S3 LCM.
+
+~ Lets understand how this LCM will optimize the cost of files.
+
+~ For the first 3 months, the files are going to be used by the customers - STANDARD
+
+~ After 3 months, these files may or maynot be accessed by the customers - INTELLIGENT TIER
+
+~ For the next 6 months, these files are not used frequently, but whenever customer needs the files, they should be readily availble for access  - IA:STANDARD
+
+~ For the next 24 months, these files should be available, but they maynot need an immediate access - GLACIER DEEP ARCHIVAL
+
+~ After the 24 months, these files can be deleted  - STANDARD
+
+
+The question is who is going to change the storage classes for the stipulated duration?
+	Manual work is impossible.
+	S3 LCM - Automation process
+
+In S3 LCM, we have two types of configurations:
+1. Transition Policy: If we want to change the file from one storage class to another storage class, then we will use Transition Policy.
+
+2. Expiration Policy: If we want to delete the files after a stipulated duration, we will use Expiration Policy.
+
+Tasks:
+------------
+1. Create Bucket
+2. Create Life Cycle Rule for the Bucket
+3. Upload a file
+4. Observe the change
+
+Create bucket ----> Open Bucket ----> Management ----> Create life cycle rule ----> Name: lcm-rule ----> "Check" Apply to all objects in the bucket ----> Storage Class: Select any storage class ----> Duration: 1 day ----> Create rule
+
+Go to bucket and upload an object.
+
+After the specified duration, the files will convert into the different storage class.
+
+=====================
+S3 Event Notifications
+=====================
+~ If you want to get the notifications of all the activities that are happening in a bucket, then we will use S3 Event Notifications.
+
+~ To get the event notifications, we have 3 options: 
+	SNS - Simple Notification Service
+	SQS - Simple Queue Service
+	Lambda
+
+Tasks:
+----------------
+1. Create bucket
+2. Create event notification - SNS
+	2.1 SNS: Create a topic
+	2.2 SNS: Subscribe to the topic
+3. Upload an object
+4. Check for notification
+
+
+SNS Console  Click on topic   Edit  Access Policy   Copy and Paste the second example policy from below link  Modify the policy accordingly  Save changes.
+
+https://docs.aws.amazon.com/AmazonS3/latest/userguide/ways-to-add-notification-config-to-bucket.html
+
+Bucket  Properties  Event Noti.  Create event notification  Event name  Event types: Select any one  Destination: SNS Topic  Choose from your SNS Topic  Save changes
+Upload the objects in to bucket and check for notifications.
+
+
+_____________________________________________________________________________________
+
+
+
+
+
+
+
+
+
+_____________________________________________________________________________________
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,73 @@
+#####################################################################################
+												Day 18
+#####################################################################################
+======================
+EC2 Autoscaling - Demo
+======================
+***************************************************
+Demo 1 – Only Autoscaling: Manual Scaling of Instances
+***************************************************
+1. Create Launch Template with no user data
+2. Create Auto Scaling Groups
+3. Observe the changes in EC2 Console
+
+LT Name: 03AprilB9-LT
+SG Name: 03AprilB9-SG
+ASG Name: 03AprilB9-ASG
+
+Desired : 2
+Minimum : 2
+Maximum : 5
+
+***************************************************
+Demo 2 – Only Autoscaling: Automatic Scaling of Instances
+***************************************************
+1. Create Launch Template with user data
+2. Create Auto Scaling Groups
+	2.1 Observe the change in Instances
+3. Creation of Scaling Policies in ASG
+4. Increasing the load on Instance
+5. Observe the changes in EC2 Console
+
+
+LT Name: 03Apirl-B9-D2-LT
+SG Name: 03Apirl-B9-D2-TG
+ASG Name: 03Apirl-B9-D2-ASG
+CloudWatch Alarm Name: 03Apirl-B9-D2-CWA
+
+
+Target Value: 30% (If the CPU Utilization % exceeds 30% then Target Tracking Scaling Policy will launch 1 instance)
+Target Tracking Scaling: Scale-out of Instances (Adding Instances)
+Step Scaling: Scale-in of Instances (Removing Instances)
+(If the CPU Utilization % is lessthan 10% then Stepg Scaling Policy will terminate 1 instance)
+
+Based on CPU Utilization Metric
+------------------------------------------------
+User data for Launch Template
+------------------------------------------------
+#!/bin/bash
+yum update -y
+yum install -y httpd
+systemctl start httpd
+systemctl enable httpd
+usermod -a -G apache ec2-user
+chown -R ec2-user:apache /var/www
+chmod 2775 /var/www
+echo "Hi Kastro from $(hostname)" > /var/www/html/index.html
+
+----------------------------------------------------------
+Commands to increase load on Instance:
+----------------------------------------------------------
+sudo amazon-linux-extras install epel -y
+sudo yum install stress -y
+stress --cpu 8
+
+
+
+
+
+
+
+
+
+
