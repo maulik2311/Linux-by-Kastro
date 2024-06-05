@@ -1,0 +1,43 @@
+#####################################################################################
+												Day 23
+#####################################################################################
+========================
+CloudWatch with SNS
+========================
+https://docs.aws.amazon.com/cloudwatch/index.html
+
+Tasks:
+------------
+1. Create SNS Topic with email notification
+	1.1 Subscribe to the topic created
+2. Create EC2 Instance 
+3. Create CloudWatch Alarm
+	3.1 CPU >= 10%
+	3.2 Alarm should send the notification SNS Topic
+4. Attach a CloudWatch Alarm to the EC2 Instance
+5. Increase the load on the instance
+6. Observe the behaviour of CloudWatch/Alarm/SNS
+
+========================
+Lightsail
+========================
+~ To launch an EC2 Instance, we need VPC, Keypair, EBS, AMI,........
+~ To connect to the EC2 Instance, like MobaXTerm, Connect, Sessions Manager....
+~ In order to avoid the complications for beginners, we are going to use Lightsail Service.
+~ In lightsail, we can create DB, Servers, Networking, Containers....
+
+
+
+.
+.
+.
+
+
+
+
+
+
+
+
+
+

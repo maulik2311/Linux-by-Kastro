@@ -1,0 +1,35 @@
+#####################################################################################
+												Day 25
+#####################################################################################
+=====================================================
+Identity and Access Management (IAM) - AWS Managed Policies
+=====================================================
+Tasks:
+-----------
+1. Create IAM User without any permissions
+2. Try to login and open AWS S3, EC2.....Consoles
+3. Attach AWS Managed Policy (to access the S3 Console) to the above created IAM user
+4. Try accessing the S3 Console again
+5. Try accessing the IAM Console 
+6. Add IAM Permissions and observe the difference
+7. Generate Secret Keys and Try Login using CLI
+8. Try accessing S3 Buckets
+
+=====================================================
+Identity and Access Management (IAM) - User Managed Policies
+=====================================================
+Tasks:
+-----------
+
+
+
+
+
+
+
+
+
+
+
+
+

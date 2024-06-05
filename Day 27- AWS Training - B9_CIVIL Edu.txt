@@ -1,0 +1,52 @@
+#####################################################################################
+												Day 27
+#####################################################################################
+================
+Elastic BeanStalk
+================
+Why Elastic BeanStalk?
+------------------------------------------
+~ AWS Elastic BeanStalk makes it easy for developers to share their applications across different devices within less amount of time.
+
+What Elastic BeanStalk?
+------------------------------------------
+~ It is a service which is used to Deploy and Scale the web applications by developers.
+~ It also supports multiple programming languages (Java, php, .net, python, node.js.....)
+~ If any programming language is not available in Elastic BeanStalk, we can make a request to AWS to provide the required programming.
+
+Advantages of Elastic BeanStalk?
+------------------------------------------------
+~ Highly scalable
+~ Fast and Simple to work with
+~ Quick deployment
+~ Supports multi-tenant architecture
+~ Simplifies the operations
+~ Cost efficient
+
+Components of Elastic BeanStalk?
+-------------------------------------------------
+BeanStalk consists of 4 major components which are required while deploying the application:
+1. Application -  Application is an UNIQUE label which is used as a deployable code for our web application
+2. Application Version - It resembles a folder which stores a collection of components such as environments, versions and environment configuration.
+3. Environment - In this only the current version of the application will run
+4. Environment Tier - It designates the type of application that the environment runs
+		4.1 Web Server Environment
+		4.2 Worker Node Environment
+
+Architecture of Elastic BeanStalk:
+------------------------------------------------------
+~ Based on the client requirement, Elastic BeanStalk provides two types of environment tiers:
+1 Web Server Environment
+~ It is front end facing, which means clients will be able to access the environments directly.
+~ Mostly web apps are deployed using this environment.
+~ It only handles HTTP and HTTPS requests from the clients
+
+2 Worker Node Environment
+~ The work node envi. is the backend of Apps or the Micro Apps which are basically required to support the running of web app.
+~ It processes the background tasks and it minimizes the consumption of resources.
+
+Companies using Elastic BeanStalk: Ebury, Jelly Button, Zillow....
+
+
+
+

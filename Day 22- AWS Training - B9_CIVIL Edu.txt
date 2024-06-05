@@ -1,0 +1,67 @@
+#####################################################################################
+												Day 22
+#####################################################################################
+=================================================
+How to connect to the EC2 instance when keypair is lost
+=================================================
+1. Launch an EC2 Instance and insert a file into the instance
+2. Take the backup of EBS Volume of the instance created in Step 1 - Snapshot
+3. Create AMI from the Snapshot
+4. Launch the instance from the AMI Created in Step 3 - Create a new keypair
+5. Connect to the newly created instance and check for the files.
+======================
+EC2 Placement Groups
+======================
+~ Placement groups are logical groupings or clusters of instances in a selected AWS Region.
+~ 100 Instances - 
+	20 Instances - Dev Team	
+	20 Instances - Testing Team
+	40 Instances - Prod Envi.
+	20 Instances - Pilot Envi.
+
+~ Placement group strategies:
+1. Cluster - It clusters the instances to low latency group in single AZ
+2. Spread - It places a small group of instances across distinct underlying hardware
+3. Partition - It spreads the instances across many different partitions in the same AZ.
+
+======================
+EC2 Pricing Plans
+======================
+https://aws.amazon.com/ec2/pricing/
+
+Free tier
+------------------
+As part of the AWS Free Tier, you can get started with Amazon EC2 for free. This includes 750 hours of Linux and Windows t2.micro instances (t3.micro for the regions in which t2.micro is unavailable), each month for one year. To stay within the Free Tier, use only EC2 Micro instances.
+
+On-Demand
+-----------------
+
+Spot instances
+----------------------
+
+Savings Plans
+--------------------
+
+Dedicated Hosts
+------------------------
+
+Per-Second Billing
+--------------------------
+
+======================
+Elastic File System (EFS)
+======================
+~ EFS belongs to File Level Storage
+~ FSx also belongs to File Level Storage
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,66 @@
+#####################################################################################
+												Day 24
+#####################################################################################
+================================
+Identity and Access Management (IAM)
+================================
+~ FREE for lifelong
+~ Authentication, Accessibility
+~ Authentication is nothing the Identity. To provide Authentication to AWS Account, Identity is important.
+~ To get access to AWS Services, an User has to create AWS Account, from which Username and Password can be generated.
+~ To further secure your AWS Account, we have a feature which is called as MFA (Multi Factor Authentication)
+~ But in AWS, identity is just to log-in to the AWS Account. To use the services in AWS we need Access which is called as Autherization.
+~ The username and password in AWS are called as Root Credentials and the user who is having the username and password is called as Root User.
+~ There are two types of users in AWS: 1. Root User 2. IAM User
+~ AWS suggests to use only IAM User instead of Root User.
+
+Features of Identity
+--------------------------------
+1. IAM User
+2. IAM Role
+
+DB Team (10 Members - 10 IAM Users for DB Team) - RDS
+Networking Team (10 Members - 10 IAM Users for Networking Team) - VPC
+
+~ IAM Users can access the AWS Account using three different options
+	1. AWS Console
+	2. CLI (Command Line Interface) - Access Key and Secret Access Key
+	3. Programmatic Access
+
+
+~ If you want to give the permissions to access a specific service in AWS, we shall have to create IAM Policy.
+~ IAM Policy can be written in two ways:
+	1. Visual Editor
+	2. JSON code
+
+IAM Role
+-----------------
+1. Creating IAM User
+2. Creating IAM Role
+
+IAM Policy
+--------------------
+~ Permissions to the services are specified in the IAM Policy
+There are two types of IAM policies:
+1. AWS Managed Policies - These policies are provided by AWS
+2. Customer Managed Policies - These policies are created by the customer (Root User or AWS Account Holder)
+
+
+IAM Groups:
+---------------------------
+DevOps Team - 10 Members
+IAM Groups are used to group all the IAM Users belonging to a specific team
+
+
+IAM Sub-topics:
+--------------------------
+1. IAM Users
+2. IAM Roles
+3. IAM Policies
+4. IAM Groups
+
+
+
+
+
+

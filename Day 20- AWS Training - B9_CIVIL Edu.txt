@@ -1,0 +1,103 @@
+#####################################################################################
+												Day 20
+#####################################################################################
+======================
+Storage Formats in AWS
+======================
+1. File Level Storage
+	EFS - for Linux OS, NFS Protocol, 5GB Storage for 12 months, EFS automatically grows & shrinks 				when you add/remove files.
+	FSx - for Windows OS, SMB Protocol
+
+2. Block Level Storage
+	EBS - Elastic Block Storage
+		30 GB Storage for 12 Months.
+		Used for low level operations.
+
+3. Object Level Storage
+	S3 - Simple Storage Service
+
+======================
+Elastic Block Storage (EBS)
+======================
+For any EC2 Instance, we can assign 2 types of storage.
+1. Block Level Storage - EBS, Instance Store (Outdated)
+2. File Level Storage - EFS (Linux OS), FSx (Windows OS)
+
+Note: By default, whenever we create an EC2 Instance, an EBS Volume will also be created.
+
+~ EC2 and EBS are independent. They are connected by a network (VPC - Public Network, Private Network).
+~ When we want the Persistant Storage then we will use the EBS Volumes.
+~ Persistant Storage is nothing but the data available in the EC2 instance will not be deleted.
+~ In Instance Store the data can be stored for a temporary period.
+~ If an EC2 Instance is stopped, the EBS volume will be running in the back-end and hence it is called as Persistant Storage.
+~ For one EC2 Instance, we can attach 16 EBS Volumes. 64 TB
+~ 1 EBS Volume can be connected with multiple EC2 Instances and this feature is called "EBS MultiAttach"
+~ The limitation of EBS MultiAttach feature is, the EC2 Instances which are running on Nitro Hyperviser only for those instances we can attach multiple EBS Volumes.
+~ EBS Volumes are based on AZs.
+
+Types of EBS Volumes:
+-----------------------------------
+1. SSD Type - Better Performance
+2. HDD Type - Slow Performance
+3. Previous Generations
+
+~ The advantage of using SSD Type EBS Volumes is, it works based on "IOPS (Input Output Per Second)."
+~ HDD Type will function based on "ThroughPut" Method
+~ HDD Type EBS Volumes will be used for Big Data Analytics Works.
+
+Types in SSD:
+1. General Purpose (GP)
+		1.1 Whenever there is a normal usage then we can select the GP Volume Types.
+		1.2 By default, whenever an instance is launched, we will get GP type of volumes.
+		1.3 You always have the chance to change the Volume Types.
+		1.4 GP is divided into two categories
+				1.4.1. GP2
+				1.4.2. GP3
+2. Provisioned IOPS
+		2.1 When you want to access the data at a fast level, then we can select the Provisioned IOPS
+		2.2 Provisioned IOPS is divided into three categories
+				2.2.1 io1 (Only for Nitro based instances)
+				2.2.2 io2 (Only for Nitro based instances)
+				2.2.3 io2 block express (It can used only for R5 Instance Types)
+
+gp2 - IOPS: 300 / 3000
+gp3 - IOPS: 3000 / 16000
+io1 - IOPS: 100 / 5000
+io2 - IOPS: 100 / 1,00,000
+io2 block express - >= 1,00,000
+
+=============
+Snapshots
+=============
+~ The back-up of EBS Volumes is called as SNAPSHOTS. In the backend, they will be stored in the S3 Buckets of our AWS Account.
+~ The buckets in which the Snapshots are being stored cannot be accessed. These buckets are called as Opaque Buckets.
+~ These snapshots will be stored in the "Snapshots" section in EC2Console.
+~ AMI - Backup of the EC2 Instances.
+
+
+EBS provides the ability to create snapshots (backups) of any EBS volume and write a copy of the data in the volume to S3, where it is stored redundantly in multiple Availability Zones
+Snapshots are incremental backups and store only the data that was changed from the time the last snapshot was taken.
+Snapshots can be used to create new volumes, increase the size of the volumes or replicate data across Availability Zones.
+Snapshot size can probably be smaller than the volume size as the data is compressed before being saved to S3.
+EBS Snapshots can be used to migrate or create EBS volumes in different AZs or regions.
+
+
+Life Cyle Manager
+----------------------------
+Automate the creation, retention, copy and deletion of snapshots and AMIs
+In order to automate the backup of snapshots on daily basis, we will use Life Cyle Manager.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,102 @@
+#####################################################################################
+												Day 28
+#####################################################################################
+=============================
+Relational Database Service (RDS)
+=============================
+Data: It is a collection of data
+DataBase: Organized collection of data
+
+Types of data:
+----------------------
+1. Structured
+2. Semi-Structured
+3. Unstructured
+
+1. Structured Data
+------------------------------
+~ Here the data will be available in a pre-defined structure.
+~ It will be available in Table format
+~ The structure is called as "SCHEMA"
+~ Schema consists of the details related to the table
+~ Structured data type is used in RDS
+~ You can add multiple tables/columns which is called as "Foreign Key Relation"
+~ In this we will use SQL (Simple Query Language)
+
+2. Semi-Structured Data
+------------------------------------
+~ Partially structured
+~ This type uses JSON/XML formats. (XML format is an outdated)
+~ To work with semi-structured data we have services in AWS which are known as "Dynamo DB" and "Document DB"
+~ It is a non-relational DB type
+~ In this we will use NoSQL
+
+3. Unstructured Data
+------------------------------------
+~ No specific formats will be available
+~ There is no DB that supports unstructured data
+
+Database
+-----------------
+~ RDS & Aurora belongs to Relational Databases
+~ To install a DB on a server, we have multiple options
+	--- We can install a DB in our local machine (PC)
+	--- We can install a DB on EC2 Instance
+	--- We can install a DB on RDS
+~ If we want to install a DB, and manage the DB and also if you want to maintain a DB, we need 3 important components
+	--- Hardware (Core, RAM, Storage...)
+	--- OS Management
+	--- DB Installation and Maintanance
+
+~ DBs are of two types: 
+	--- Relational DB (SQL)
+	--- Non-Relational DB (NoSQL)
+
+Database Setup on EC2 Instance:
+-------------------------------------------------
+
+echo "CREATE DATABASE ${DBName};" >> /tmp/db.setup
+echo "CREATE USER '${DBUser}' IDENTIFIED BY '${DBPassword}';" >> /tmp/db.setup
+echo "GRANT ALL PRIVILEGES ON *.* TO '${DBUser}'@'%';" >> /tmp/db.setup
+echo "FLUSH PRIVILEGES;" >> /tmp/db.setup
+mysqladmin -u root password "${DBRootPassword}"
+mysql -u root --password="${DBRootPassword}" < /tmp/db.setup
+rm /tmp/db.setup
+
+Adding some dummy data to the Database inside EC2 Instance:
+---------------------------------------------------------------------------------------------
+
+mysql -u root --password="${DBRootPassword}"
+USE ec2db;
+CREATE TABLE table1 (id INT, name VARCHAR(45));
+INSERT INTO table1 VALUES(1, 'Virat'), (2, 'Sachin'), (3, 'Dhoni'), (4, 'ABD');
+SELECT * FROM table1;
+
+Migration of Database in EC2 Instance to RDS Database:
+-------------------------------------------------------------------------------------
+
+mysqldump -u root -p ec2db > ec2db.sql
+mysql -h <replace-rds-end-point-here> -P 3306 -u rdsuser -p rdsdb < ec2db.sql
+mysql -h <replace-rds-end-point-here> -P 3306 -u rdsuser -p
+USE rdsdb
+SELECT * FROM table1; 
+
+=====
+RDS
+=====
+~ AWS is providing DB as a Service for the users.
+~ DBs: MySQL, MariaDB, Oracle, Microsoft SQL, Postgress SQL.....
+
+
+
+
+
+
+
+
+
+
+
+
+
+

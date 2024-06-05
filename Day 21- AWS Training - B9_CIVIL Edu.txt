@@ -1,0 +1,47 @@
+#####################################################################################
+												Day 21
+#####################################################################################
+======================
+EBS Volumes__Hands-on
+======================
+
+
+How to modify the size and type of EBS Volumes:
+---------------------------------------------------------------------------
+Goto EBS Volumes Consoles -----> Check the EBS Volume -----> Actions -----> Modify Volume -----> Change the Type of Volume and/or Size of Volume according to the requirement -----> Modify -----> Modify.
+
+Verify the changes in the EBS Volumes Consoles
+
+How to change the AZ of EBS Volumes:
+---------------------------------------------------------------------------
+1. How to take the snapshots of EBS Volumes
+2. How to create AMI from the Snapshot
+3. How to launch the instance from AMI - Change the AZ under NETWORKING
+
+How to attach a new EBS Volume to an existing instance:
+----------------------------------------------------------------------------------
+
+
+
+
+EBS Multiattach
+------------------------------
+1. EBS Volume and Instances should be in the same AZ
+2. The multi attach feature is available only for io2 Volume Type
+3. 16 Instances can be associated to 1 EBS Volume
+
+Tasks:
+-----------
+1. Launch 2 instances in the same AZ
+2. Create a new volume of any type and any size.
+3. Work on Multiattach feature
+
+
+
+
+
+
+
+
+
+
