@@ -1,0 +1,201 @@
+_________________________________________________________________________________________________________________
+_____________________________________________________________________________________________________________________
+___________________________________________________DAY 05__________________________________________________________
+_____________________________________________________________________________________________________________________
+1. Changing Jenkins Port number
+2. Project 3 - Pipeline
+3. Master and Slave
+
+1. Changing Jenkins Port number
+------------------------------------------------
+Method 1:
+******************
+1. Connect to the instance
+
+# Check Jenkins Service File
+sudo systemctl cat jenkins
+
+sudo vi /lib/systemd/system/jenkins.service
+
+2. Locate Jenkins Configuration File
+sudo vi /etc/sysconfig/jenkins
+
+3. Modify the Port Number
+# Look for the line that sets the JENKINS_PORT environment variable. It will look something like this:
+JENKINS_PORT="8080"
+# Change the 8080 to your desired port number. For example, to change the port to 7070, update the line to:
+JENKINS_PORT="7070"
+
+4. Save and Exit
+
+5. Restart Jenkins Service
+sudo systemctl restart jenkins
+
+6. Update Security Group Rules of VM
+
+7. Verify Jenkins is Running on New Port
+
+Method 2:
+******************
+sudo vi /lib/systemd/system/jenkins.service
+
+
+Project 1: Jenkins + Github + Maven --------------> CI Project (Freestyle project)
+
+Project 2: Jenkins + Github + Maven + Tomcat --------------> CI & CD Project (Freestyle project)
+
+Project 3: Jenkins + Github + Maven + Tomcat --------------> CI & CD Project (Pipeline)
+
+
+PROJECT 3
+--------------------
+Repo URL: https://github.com/KastroVKiran/Netflix-Pipeline-Project.git
+
+In this project, we will configure 3 stages in the pipeline script
+
+Stage 1: Github Stage ----> Cloning the code/project repo
+
+Stage 2: Maven Stage -----> Build & Package the code (clean package)
+
+Stage 3: Deploy Stage -----> Deployment of the application
+
+
+pipeline {
+    agent any
+
+    stages {
+        stage('GitHub Stage') {
+            steps {
+                git credentialsId: 'githubpipeline3', url: 'https://github.com/KastroVKiran/Netflix-Pipeline-Project.git'
+            }
+        }
+        stage('Maven Build Stage') {
+            steps {
+                script {
+                    def mavenHome = tool name: "maven s/w", type: "maven"
+                    def mavenCMD = "${mavenHome}/bin/mvn"
+                    sh "${mavenCMD} clean package"
+                }
+            }
+        }
+        stage('Deploy Stage') {
+            steps {
+                script {
+                    sh 'sudo cp target/NETFLIX-1.2.2.war /home/ec2-user/apache-tomcat-9.0.89/webapps'
+                }
+            }
+        }
+    }
+}
+
+Before writing stage 3, run the below commands in MobaXTerm
+sudo visudo
+
+#Add the following line at the end of the file, assuming the Jenkins user is 'jenkins'
+jenkins ALL=(ALL) NOPASSWD: /bin/cp
+
+
+-------------------------------------------
+Master and Slave Architecture
+-------------------------------------------
+Netflix - Movies, Cartoons, Sports, Documentaries
+
+VM - jenkins
+Based on the number of environments, we have to created those many jobs.
+Every job is responsible to deploy the code into the respective environment.
+For a project, we have multiple teams and all the team members will be connected to the respective jenkins job (environment).
+Ex: 
+Dev Job ----> Developers ----> dev environment (tomcat server - IP Address)
+QA Job ----> Testers ----> qa environment (tomcat server - IP Address)
+
+Dev Team ---> Dev Job ---> Developers ---> RBAC/Creating users in jenkins
+QA Team ---> Test Job ---> Testers ---> RBAC/Creating users in jenkins
+
+Lets say if all the jobs are running at-a-time in the jenkins, it will become a burden to the jenkins server.
+Build and deployment will also get affected.
+hence this approach is not recommended.
+
+As an alternative, we have a concept known as "Distributed Architecture" which is also called as "Master and Slave Configuration"
+
+Concept of Master and Slave Configuration
+-------------------------------------------------------------
+Jenkins Installed Instance - Master Node
+In the jenkins master node, i will created various jobs related to different environments.
+I will not execute all the jobs on the master node, instead i will execute the respective jobs on respective environment.
+Slave nodes are used to execute the jobs created on master node.
+the master node will be connected to the jenkins slaves.
+For each slave, we will create separate instances.
+The slaves are purely meant for job execution.
+On slave nodes, jenkins s/w will not be installed. 
+On slave nodes, we will install only java s/w (java 11)
+
+master node - jenkins
+slave node - java
+
+JenkinsMaster
+------------------------
+Main jenkins server will be available
+The roles of jenkins master node;
+1. Scheduling the jobs
+2. Dispatching the builds to the slaves for execution
+3. Monitoring the slaves
+4. Recording and presenting the build results
+
+Working with master and slave architecture
+--------------------------------------------------------
+Step1:Create jenkins master node - install jenkins, configure maven, configure github, install required plugins
+Step2: Create a jenkins slave node(s)
+Step3: Configure slave nodes in jenkins master node.
+
+Connect to jenkins master node
+
+Launch 2 instances and name them as slave-1 and slave-2
+
+#Perform the below in slave VMs
+
+Since slave VMs has to clone the code, we need to install git on slave nodes
+sudo yum update -y
+sudo yum install git -y
+
+if i want to run the jenkins jobs in slave VM, we have to install java s/w
+sudo amazon-linux-extras install java-openjdk11 -y
+java -version
+
+connect to slave1:
+mkdir slavenode
+
+the above directory is used to store the jenkins job execution details
+
+cd slavenode
+
+currently we have 2 VMs (Slaves) and 1 VM (Master)
+
+login to the jenkins master node and connect to the jenkins console
+
+Lets run the jobs using slave
+-----------------------------------
+Manage jenkins ----> Manage nodes and clouds ----> You can see teh 'built-in' node ----> New node ----> Node name: slave1 ----> 'Check' Permanent agent ----> Create
+
+Now we have to enter more details about slave-1 node.
+Description: slave-1
+No. of executors: 1 (number of executors depends number of jobs)
+'Remote root directory': /home/ec2-user/slavenode
+labels: slave-1
+Usage: use this node as much as possible
+launch method: launch agent via SSH
+host: "paste the public DNS' of jenkins slave 1
+credentials: here we have to provide ec2 credentials  ----> Click on Add ----> Jenkins ----> Domain: Global creds, Kind: SSH Username with private key, username: ec2-user, Private key: 'check' enter directly ----> Add ----> Copy the content of pem file used for slave nodes and paste it ----> host key verification strategy: Manually trusted key verfication stratagy ----> Save
+
+You can see slave-1 got created.
+
+Goto jenkins dashboard ----> Under 'Build executor status' you can see 'Slave-1' node along with built-in nodes
+
+Click on slave-1 and explore the options
+
+go to dashboard and build a job ----> Console output ----> Here we are creating and executing the job on master node only.
+
+i want to run the job on slave node;
+click on job name ----> configure ----> general tab ----> 'check' restrict where this project can be run ----> label expression: type slave and you will automatically see the slave-1 and select it ----> Apply ----> Save
+
+Build now ----> Console output ----> You can see the job is getting build on slave node
+
